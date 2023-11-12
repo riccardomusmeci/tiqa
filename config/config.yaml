@@ -1,0 +1,73 @@
+# =========================== Trainer ==========================
+trainer:
+  accelerator: auto                               # auto for M1 gpu, cpu, cuda
+  devices: 1                                      # number of GPUs to use (mps supports only 1 device)
+  max_epochs: 100                                 # number of training epochs
+  precision: 16-mixed                             # 16-mixed or 32 (Automatic Mixed Precision (AMP))
+  check_val_every_n_epoch: 1                      # check validation every n epoch
+  gradient_clip_val: 0                            # gradient clipping value
+  num_sanity_val_steps: 2                         # number of sanity validation steps
+  reload_dataloaders_every_n_epochs: 0            # reload dataloaders every n epochs (0 to disable)
+
+# ========================== Datamodule =============================
+datamodule:
+  engine: cv2                                    # image engine (pil, opencv)
+  batch_size: 16                                 # batch size
+  shuffle: true                                  # shuffle dataset
+  num_workers: 4                                 # number of workers
+  pin_memory: true                               # pin memory
+  drop_last: false                               # drop last batch
+  persistent_workers: true                       # persistent workers
+
+# =========================== Logger ==============================
+logger:
+  save_dir: tb_logs                              # directory to save logs (saved in output_dir/tb_logs)
+  name: experiment-insulators-dbcnn-freeze       # name of the experiment
+  default_hp_metric: false                       # log default hp metric
+
+# =========================== Model ==============================
+model:
+  model_name: dbcnn_vgg16                       # IQA model name (daclip_deg_vit_base_patch32_224, dbcnn_vgg16)
+  ckpt_path: "/Users/riccardomusmeci/Developer/experiments/github/tiqa/weights/dbcnn/dbcnn_vgg16_small.pt"
+  freeze_encoder: true                          # freeze encoder weights
+  freeze_scnn: true                             # freeze scnn weights
+
+# =========================== PL Model ==============================
+pl_model:
+  unfreeze_after: 5                              # unfreeze model after n epochs
+
+# =========================== Loss ==============================
+loss:
+  name: mse                                    # name of the loss criterion to use
+
+# =========================== Optimizer ==============================
+optimizer:
+  name: adam                                    # optimization algorithm (sgd, adam, adamw)
+  lr: 0.0001                                    # learning rate
+  # betas: [0.9,0.999]                            # betas
+  # eps: 1.0e-08                                  # eps
+  weight_decay: 0.0005                          # weight decay
+  # amsgrad: false                                # amsgrad
+
+# =========================== LR Scheduler ==============================
+lr_scheduler:
+  name: cosine_restarts
+  T_0: 5
+  T_mult: 2
+  eta_min: 0
+
+# =========================== Transform ==============================
+transform:
+  input_size: [224, 224]                        # model input size (int, list, tuple)
+  mean: [0.485, 0.456, 0.406]                   # to not apply normalization put [0, 0, 0]
+  std: [0.229, 0.224, 0.225]                    # to not apply normalization put [1, 1, 1]
+  interpolation: 2                              # interpolation mode
+  horizontal_flip_prob: .5                      # horizontal flip probability
+
+# =========================== Callbacks ==============================
+callbacks:
+  filename: epoch={epoch}-step={step}-{loss_val:.4f}-{srcc:.4f}-{plcc:.4f}
+  monitor: loss_val
+  mode: min
+  save_top_k: 5
+  patience: 5
