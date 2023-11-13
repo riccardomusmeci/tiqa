@@ -69,7 +69,7 @@ class IQAModelModule(pl.LightningModule):
         x, target = batch
 
         logits = self(x)
-        target = target.view(len(target), 1).to(self.device)
+        target = target.view(logits.shape, 1).to(self.device)
         loss = self.loss(logits, target)
 
         self.log("loss_train", loss, sync_dist=True, prog_bar=True)
@@ -91,7 +91,7 @@ class IQAModelModule(pl.LightningModule):
 
         # saving predictions and targets for SRCC and PLCC
         self.scores.extend(logits[:, 0].cpu().tolist())
-        self.targets.extend(target.cpu().tolist())
+        self.targets.extend(target[:, 0].cpu().tolist())
         self.val_loss.append(loss)
 
     def on_validation_epoch_end(self):  # type: ignore
@@ -101,7 +101,7 @@ class IQAModelModule(pl.LightningModule):
         self.log("loss_val", avg_loss, sync_dist=True, prog_bar=True)
 
         srcc = spearmanr(self.scores, self.targets)[0]
-        plcc = pearsonr(self.scores, self.targets)[0][0]
+        plcc = pearsonr(self.scores, self.targets)[0]
 
         # resetting data structures
         self.scores = []
