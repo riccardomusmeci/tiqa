@@ -109,7 +109,7 @@ Use tiqa `ImageFolderDataset`, `Transform`, and `create_stuff` functions to writ
 from tiqa.transform import Transform
 from tiqa.dataset import IQADataset
 from tiqa.model import create_model
-from tiqa.loss import create_loss
+from tiqa.loss import create_criterion
 from tiqa.optimizer import create_optimizer
 from torch.utils.data import DataLoader
 import torch
@@ -127,8 +127,8 @@ model = create_model(
     freeze_encoder=False,
     freeze_scnn=True
 )
-criterion = create_loss(loss="mse")
-optimizer = create_optimizer(params=model.parameters(), optimizer="sgd", lr=0.0005)
+criterion = create_criterion(name="mse")
+optimizer = create_optimizer(params=model.parameters(), name="sgd", lr=0.0005)
 
 for epoch in range(NUM_EPOCHS):
     model.train()
@@ -136,7 +136,7 @@ for epoch in range(NUM_EPOCHS):
         optimizer.zero_grad()
         x, target = batch
         logits = model(x)
-        loss = criterion(logits, target.view(target.shape, 1))
+        loss = criterion(logits, target.view(logits.shape, 1))
         loss.backward()
         optimizer.step()
 ```
