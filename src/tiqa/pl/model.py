@@ -68,7 +68,7 @@ class IQAModelModule(pl.LightningModule):
 
         x, target = batch
 
-        logits = self(x)
+        logits = self.model(x)
         target = target.view(logits.shape, 1).to(self.device)
         loss = self.loss(logits, target)
 

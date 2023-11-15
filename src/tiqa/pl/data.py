@@ -4,6 +4,7 @@ from typing import Callable, Dict, List, Optional, Union
 import pytorch_lightning as pl
 import torch
 from torch.utils.data import DataLoader
+from ..transform import DivTargetBy
 
 from ..dataset import IQADataset
 from ..utils import get_num_workers
@@ -17,6 +18,7 @@ class IQADataModule(pl.LightningDataModule):
         val_data_dir (str): path to val dataset
         train_transform (Callable): train transform function
         val_transform (Callable): validation transform function
+        div_target_by (float): value to divide target by. Defaults to 1.
         engine (str, optional): image loading engine (pil/cv2). Defaults to "pil".
         batch_size (int, optional): DataLoader batch size. Defaults to 8.
         shuffle (bool, optional): whether to shuffle the dataset in training. Defaults to True.
@@ -33,6 +35,7 @@ class IQADataModule(pl.LightningDataModule):
         val_data_dir: Union[Path, str],
         train_transform: Callable,
         val_transform: Callable,
+        div_target_by: float = 1,
         engine: str = "pil",
         batch_size: int = 8,
         shuffle: bool = True,
@@ -46,6 +49,7 @@ class IQADataModule(pl.LightningDataModule):
         self.val_data_dir = val_data_dir
         self.train_transform = train_transform
         self.val_transform = val_transform
+        self.div_target_by = div_target_by
         self.engine = engine
         self.batch_size = batch_size
         self.shuffle = shuffle
@@ -69,12 +73,14 @@ class IQADataModule(pl.LightningDataModule):
                 root_dir=self.train_data_dir,
                 transform=self.train_transform,
                 engine=self.engine,
+                target_transform=DivTargetBy(factor=self.div_target_by),
             )
 
             self.val_dataset = IQADataset(
                 root_dir=self.val_data_dir,
                 transform=self.val_transform,
                 engine=self.engine,
+                target_transform=DivTargetBy(factor=self.div_target_by)
             )
 
     def train_dataloader(self) -> DataLoader:

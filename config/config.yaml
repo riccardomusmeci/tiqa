@@ -2,7 +2,7 @@
 trainer:
   accelerator: auto                               # auto for M1 gpu, cpu, cuda
   devices: 1                                      # number of GPUs to use (mps supports only 1 device)
-  max_epochs: 100                                 # number of training epochs
+  max_epochs: 20                                  # number of training epochs
   precision: 16-mixed                             # 16-mixed or 32 (Automatic Mixed Precision (AMP))
   check_val_every_n_epoch: 1                      # check validation every n epoch
   gradient_clip_val: 0                            # gradient clipping value
@@ -18,23 +18,24 @@ datamodule:
   pin_memory: true                               # pin memory
   drop_last: false                               # drop last batch
   persistent_workers: true                       # persistent workers
+  div_target_by: 100                             # divide target by a value (e.g. 100 for MOS)
 
 # =========================== Logger ==============================
 logger:
   save_dir: tb_logs                              # directory to save logs (saved in output_dir/tb_logs)
-  name: experiment-insulators-dbcnn-freeze       # name of the experiment
+  name: experiment-dbcnn             # name of the experiment
   default_hp_metric: false                       # log default hp metric
 
 # =========================== Model ==============================
 model:
   model_name: dbcnn_vgg16                       # IQA model name (daclip_deg_vit_base_patch32_224, dbcnn_vgg16)
-  ckpt_path: "/Users/riccardomusmeci/Developer/experiments/github/tiqa/weights/dbcnn/dbcnn_vgg16_small.pt"
-  freeze_encoder: true                          # freeze encoder weights
-  freeze_scnn: true                             # freeze scnn weights
+  ckpt_path: "/Users/riccardomusmeci/Developer/experiments/github/tiqa/weights/dbcnn/dbcnn_vggg16_koniq10k.pt"
+  freeze_encoder: false                          # freeze encoder weights
+  freeze_scnn: false                             # freeze scnn weights
 
 # =========================== PL Model ==============================
 pl_model:
-  unfreeze_after: 5                              # unfreeze model after n epochs
+  unfreeze_after: null                              # unfreeze model after n epochs
 
 # =========================== Loss ==============================
 loss:
