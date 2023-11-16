@@ -20,7 +20,13 @@ class IQADataset(Dataset):
         target_transform (Optional[Callable], optional): a function/transform that takes in the target and transforms it. Defaults to None.
     """
 
-    def __init__(self, root_dir: Union[str, Path], transform: Optional[Callable] = None, engine: str = "pil", target_transform: Optional[Callable] = None) -> None:
+    def __init__(
+        self,
+        root_dir: Union[str, Path],
+        transform: Optional[Callable] = None,
+        engine: str = "pil",
+        target_transform: Optional[Callable] = None,
+    ) -> None:
         assert os.path.exists(root_dir), f"Dataset path {root_dir} does not exist"
 
         assert os.path.exists(
