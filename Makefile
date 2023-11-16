@@ -65,7 +65,7 @@ test_fast:
 
 full:
 	make check
-	# make test
+	make test
 
 coverage:
 	make test
