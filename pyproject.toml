@@ -114,7 +114,7 @@ exclude = [
   "bin",
   "lib",
   ".cicd",
-  # "src/tocla/.resources",
+  # "src/tiqa/.resources",
   "train.py"
 ]
 #per-file-ignores = {}
@@ -134,8 +134,8 @@ max-complexity = 18
 [tool.coverage.run]
 branch = true
 dynamic_context = "test_function"
-source = ["src/tocla"]
-# omit = ["src/tocla/__init__.py", "src/tocla/visualization/*.py"]
+source = ["src/tiqa"]
+# omit = ["src/tiqa/__init__.py", "src/tiqa/visualization/*.py"]
 
 [tool.coverage.report]
 exclude_lines = [

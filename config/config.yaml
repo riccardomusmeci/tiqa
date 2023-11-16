@@ -23,32 +23,29 @@ datamodule:
 # =========================== Logger ==============================
 logger:
   save_dir: tb_logs                              # directory to save logs (saved in output_dir/tb_logs)
-  name: experiment-dbcnn             # name of the experiment
+  name: experiment-                              # name of the experiment
   default_hp_metric: false                       # log default hp metric
 
 # =========================== Model ==============================
 model:
-  model_name: dbcnn_vgg16                       # IQA model name (daclip_deg_vit_base_patch32_224, dbcnn_vgg16)
-  ckpt_path: "/Users/riccardomusmeci/Developer/experiments/github/tiqa/weights/dbcnn/dbcnn_vggg16_koniq10k.pt"
+  model_name: dbcnn_vgg16                        # IQA model name (daclip_deg_vit_base_patch32_224, dbcnn_vgg16)
+  ckpt_path: null                                # path to a checkpoint to load
   freeze_encoder: false                          # freeze encoder weights
   freeze_scnn: false                             # freeze scnn weights
 
 # =========================== PL Model ==============================
 pl_model:
-  unfreeze_after: null                              # unfreeze model after n epochs
+  unfreeze_after: null                           # unfreeze model after n epochs
 
 # =========================== Loss ==============================
 loss:
-  name: mse                                    # name of the loss criterion to use
+  name: mse                                      # name of the loss criterion to use
 
 # =========================== Optimizer ==============================
 optimizer:
   name: adam                                    # optimization algorithm (sgd, adam, adamw)
   lr: 0.0001                                    # learning rate
-  # betas: [0.9,0.999]                            # betas
-  # eps: 1.0e-08                                  # eps
   weight_decay: 0.0005                          # weight decay
-  # amsgrad: false                                # amsgrad
 
 # =========================== LR Scheduler ==============================
 lr_scheduler:

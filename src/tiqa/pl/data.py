@@ -4,9 +4,9 @@ from typing import Callable, Dict, List, Optional, Union
 import pytorch_lightning as pl
 import torch
 from torch.utils.data import DataLoader
-from ..transform import DivTargetBy
 
 from ..dataset import IQADataset
+from ..transform import DivTargetBy
 from ..utils import get_num_workers
 
 
@@ -80,7 +80,7 @@ class IQADataModule(pl.LightningDataModule):
                 root_dir=self.val_data_dir,
                 transform=self.val_transform,
                 engine=self.engine,
-                target_transform=DivTargetBy(factor=self.div_target_by)
+                target_transform=DivTargetBy(factor=self.div_target_by),
             )
 
     def train_dataloader(self) -> DataLoader:

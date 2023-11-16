@@ -91,17 +91,18 @@ class DBCNN(nn.Module):
         return x
 
 
-def dbcnn_vgg16(freeze_encoder: bool = False, freeze_scnn: bool = False) -> DBCNN:
+def dbcnn_vgg16(freeze_encoder: bool = False, freeze_scnn: bool = False, pretrained: bool = True) -> DBCNN:
     """Create a DBCNN model with VGG16 encoder.
 
     Args:
         freeze_encoder (bool, optional): If True, freeze the weights of the encoder during training. Defaults to False.
         freeze_scnn (bool, optional): If True, freeze the weights of the SCNN during training. Defaults to False.
+        pretrained (bool, optional): If True, use pretrained weights for the encoder. Defaults to True.
 
     Returns:
         DBCNN: A DBCNN model with a VGG16 encoder and an SCNN.
     """
-    vgg16 = create_model("vgg16", pretrained=True, num_classes=0)
+    vgg16 = create_model("vgg16", pretrained=pretrained, num_classes=0)
     scnn = SCNN(num_classes=35)
     return DBCNN(
         encoder=vgg16.features,

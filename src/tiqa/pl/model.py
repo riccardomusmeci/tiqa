@@ -115,7 +115,7 @@ class IQAModelModule(pl.LightningModule):
         self.log("srcc", srcc, sync_dist=True, prog_bar=True)
         self.log("plcc", plcc, sync_dist=True, prog_bar=True)
 
-    def on_train_epoch_start(self):
+    def on_train_epoch_start(self) -> None:
         """Unfreeze model after a certain number of epochs."""
         if self.unfreeze_after is not None:
             if self.current_epoch == self.unfreeze_after:
