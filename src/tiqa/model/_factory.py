@@ -5,12 +5,11 @@ from typing import Dict, Optional, Union
 import torch
 import torch.nn as nn
 
-from .factory import daclip_deg_vit_base_patch32_224, dbcnn_effnetb0, dbcnn_vgg16
+from .factory import daclip_deg_vit_base_patch32_224, dbcnn_vgg16
 
 _FACTORY = {
     "dbcnn_vgg16": dbcnn_vgg16,
     "daclip_deg_vit_base_patch32_224": daclip_deg_vit_base_patch32_224
-    # "dbcnn_effnetb0": dbcnn_effnetb0
 }
 
 

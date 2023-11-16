@@ -111,16 +111,3 @@ def dbcnn_vgg16(freeze_encoder: bool = False, freeze_scnn: bool = False) -> DBCN
         freeze_encoder=freeze_encoder,
         freeze_scnn=freeze_scnn,
     )
-
-
-def dbcnn_effnetb0(freeze_encoder: bool = True, freeze_scnn: bool = True) -> DBCNN:
-    effnetb0 = create_model("efficientnet_b0", pretrained=True, num_classes=0)
-    scnn = SCNN(num_classes=35)
-    return DBCNN(
-        encoder=effnetb0,
-        scnn=scnn,
-        encoder_dim=1280,
-        scnn_dim=128,
-        freeze_encoder=freeze_encoder,
-        freeze_scnn=freeze_scnn,
-    )

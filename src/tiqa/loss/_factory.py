@@ -6,6 +6,7 @@ from torch.nn.modules.loss import _Loss
 
 FACTORY = {
     "mse": torch.nn.MSELoss,
+    "l1": torch.nn.L1Loss,
 }
 
 __all__ = ["list_criteria", "create_criterion"]

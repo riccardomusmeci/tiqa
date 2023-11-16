@@ -5,7 +5,7 @@ import os
 
 from ..pl import IQAModelModule, IQADataModule
 from ..io import TiqaConfiguration
-from ..transform import Transform
+from ..transform import Transform, DivTargetBy
 from ..model import create_model
 from ..loss import create_criterion
 from ..optimizer import create_optimizer

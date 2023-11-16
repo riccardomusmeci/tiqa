@@ -595,10 +595,11 @@ class DACLIPDegradationViT(nn.Module):
         quick_gelu: bool = False,
         norm_layer: Callable = LayerNorm,
         output_tokens: bool = False,
+        proj_dim: int = 1152,
     ) -> None:
         super().__init__()
         act_layer = QuickGELU if quick_gelu else nn.GELU
-        self.model = VisionTransformer(
+        self.backbone = VisionTransformer(
             image_size=image_size,
             patch_size=patch_size,
             width=width,
@@ -617,8 +618,13 @@ class DACLIPDegradationViT(nn.Module):
             norm_layer=norm_layer,
             output_tokens=output_tokens,
         )
-        self.model.transformer = ControlTransformer(self.model.transformer)
-        self.fc = nn.Linear(output_dim, 1)
+        self.gelu = nn.GELU()
+        self.backbone.transformer = ControlTransformer(self.backbone.transformer)
+        self.head = nn.Sequential(
+            nn.Linear(output_dim, proj_dim, bias=False),
+            self.gelu,
+            nn.Linear(proj_dim, 1, bias=False)
+        )
 
     def forward_features(self, x: torch.Tensor) -> torch.Tensor:
         """Forward features.
@@ -629,7 +635,7 @@ class DACLIPDegradationViT(nn.Module):
         Returns:
             torch.Tensor: output features
         """
-        return self.model(x, output_hiddens=False)
+        return self.backbone(x, output_hiddens=False)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward pass.
@@ -640,31 +646,19 @@ class DACLIPDegradationViT(nn.Module):
         Returns:
             torch.Tensor: output features
         """
-        embed = self.model(x, output_hiddens=False)
-        out = self.fc(embed)
+        embed = self.backbone(x, output_hiddens=False)
+        out = self.head(embed)
         return out
 
 
 def daclip_deg_vit_base_patch32_224() -> DACLIPDegradationViT:
     return DACLIPDegradationViT(
-        image_size=224, patch_size=32, width=768, layers=12, head_width=768, mlp_ratio=4.0, output_dim=512
+        image_size=224, 
+        patch_size=32, 
+        width=768, 
+        layers=12, 
+        head_width=768, 
+        mlp_ratio=4.0, 
+        output_dim=512,
+        proj_dim=1152
     )
-
-
-# def daclip_vit_base_patch32_224() -> VisionTransformer:
-#     quick_gelu = False
-#     head_width = 64
-#     heads = 768 // head_width
-#     print(heads)
-#     quit()
-#     act_layer = QuickGELU if quick_gelu else nn.GELU
-#     output_dim = 512
-#     return VisionTransformer(
-#         image_size=224,
-#         patch_size=32,
-#         width=768,
-#         layers=12,
-#         heads=heads,
-#         mlp_ratio=4.0,
-#         output_dim=512
-#     )

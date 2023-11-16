@@ -17,9 +17,10 @@ class IQADataset(Dataset):
         root_dir (Union[str, Path]): root directory of the dataset.
         transform (Optional[Callable], optional): a function/transform that takes in a sample and returns a transformed version. Defaults to None.
         engine (str, optional): image processing engine to use (cv2/pil). Defaults to "pil".
+        target_transform (Optional[Callable], optional): a function/transform that takes in the target and transforms it. Defaults to None.
     """
 
-    def __init__(self, root_dir: Union[str, Path], transform: Optional[Callable] = None, engine: str = "pil") -> None:
+    def __init__(self, root_dir: Union[str, Path], transform: Optional[Callable] = None, engine: str = "pil", target_transform: Optional[Callable] = None) -> None:
         assert os.path.exists(root_dir), f"Dataset path {root_dir} does not exist"
 
         assert os.path.exists(
@@ -33,6 +34,7 @@ class IQADataset(Dataset):
         self.images, self.targets = self._load_samples(root_dir)
         self.transform = transform
         self.engine = engine
+        self.target_transform = target_transform
 
     def _load_samples(self, root_dir: Union[str, Path]) -> Tuple[List[str], List[float]]:
         """Load samples from dataset.
@@ -74,6 +76,8 @@ class IQADataset(Dataset):
 
         if self.transform is not None:
             img = self.transform(img)
+        if self.target_transform is not None:
+            target = self.target_transform(target)
 
         img = torch.from_numpy(img.transpose(2, 0, 1))  # type: ignore
         target = torch.tensor(target, dtype=torch.float32)  # type: ignore
