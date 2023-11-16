@@ -7,10 +7,7 @@ import torch.nn as nn
 
 from .factory import daclip_deg_vit_base_patch32_224, dbcnn_vgg16
 
-_FACTORY = {
-    "dbcnn_vgg16": dbcnn_vgg16,
-    "daclip_deg_vit_base_patch32_224": daclip_deg_vit_base_patch32_224
-}
+_FACTORY = {"dbcnn_vgg16": dbcnn_vgg16, "daclip_deg_vit_base_patch32_224": daclip_deg_vit_base_patch32_224}
 
 
 def create_model(  # type: ignore
@@ -33,7 +30,7 @@ def create_model(  # type: ignore
     """
 
     if model_name in list(_FACTORY.keys()):
-        model = _FACTORY[model_name](**kwargs)
+        model = _FACTORY[model_name](**kwargs)  # type: ignore
     else:
         print(f"> [ERROR] No model named {model_name} found in factory")
         quit()
