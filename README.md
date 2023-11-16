@@ -1,5 +1,5 @@
 # **tiqa**
-PyTorch Image Quality Assessment library with support to PyTorch Lightning and easy access to experiment with your own dataset. 
+PyTorch Image Quality Assessment library with support to PyTorch Lightning and easy access to experiment with your own dataset.
 
 ## **How to install 🔨**
 ```
@@ -148,7 +148,7 @@ for epoch in range(NUM_EPOCHS):
         loss.backward()
         optimizer.step()
 ```
-<!-- 
+<!--
 ## **Inference 🧐**
 Also in inference mode, you can pick between "fully automated", "semi-automated", "write my own code" mode.
 
