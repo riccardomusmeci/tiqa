@@ -621,9 +621,7 @@ class DACLIPDegradationViT(nn.Module):
         self.gelu = nn.GELU()
         self.backbone.transformer = ControlTransformer(self.backbone.transformer)
         self.head = nn.Sequential(
-            nn.Linear(output_dim, proj_dim, bias=False),
-            self.gelu,
-            nn.Linear(proj_dim, 1, bias=False)
+            nn.Linear(output_dim, proj_dim, bias=False), self.gelu, nn.Linear(proj_dim, 1, bias=False)
         )
 
     def forward_features(self, x: torch.Tensor) -> torch.Tensor:
@@ -653,12 +651,12 @@ class DACLIPDegradationViT(nn.Module):
 
 def daclip_deg_vit_base_patch32_224() -> DACLIPDegradationViT:
     return DACLIPDegradationViT(
-        image_size=224, 
-        patch_size=32, 
-        width=768, 
-        layers=12, 
-        head_width=768, 
-        mlp_ratio=4.0, 
+        image_size=224,
+        patch_size=32,
+        width=768,
+        layers=12,
+        head_width=768,
+        mlp_ratio=4.0,
         output_dim=512,
-        proj_dim=1152
+        proj_dim=1152,
     )
