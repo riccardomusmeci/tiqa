@@ -132,3 +132,4 @@ dmypy.json
 *.ipynb_checkpoints
 *.DS_Store
 src/tiqa/*/__pycache__/*.pyc
+*.pyc

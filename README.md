@@ -1,5 +1,10 @@
-# **tiqa**
-PyTorch Image Quality Assessment library with support to PyTorch Lightning and easy access to experiment with your own dataset.
+<p align="center">
+  <img width="200" height="200" src="static/tiqa.png">
+</p>
+
+----
+
+**tiqa** is a PyTorch image quality assessment library with support to PyTorch-Lightning and easy access to experiment with your own dataset.
 
 ## **How to install 🔨**
 ```
