@@ -8,6 +8,14 @@ cd tiqa
 pip install .
 ```
 
+## **Models 🤖**
+
+
+| Model | Dataset | Weights |
+|-------|--------------|------|
+| dbcnn_vgg16_koniq10k | Koniq10k | [gdrive](https://drive.google.com/file/d/13GWi9ka1z7ywo04_TGGLYzY6Id_NaBFO/view?usp=share_link) |
+| dbcnn_vgg16 | - | [gdrive](https://drive.google.com/file/d/1rqeopYS38XqiWcZ8xoa1PxwqEhM4SMgU/view?usp=share_link) |
+
 
 ## **Concepts 💡**
 tiqa tries to avoid writing again, again, and again (and again) the same code to train, test and make predictions with a image classification model.
