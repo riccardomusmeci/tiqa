@@ -41,7 +41,7 @@ def train(
     else:
         output_dir = os.path.join(output_dir, now())
         os.makedirs(output_dir, exist_ok=True)
-    print("\n" + "*" * 40)
+    print("*" * 40)
     print(f"Output directory: {output_dir}")
     print("*" * 40)
 
