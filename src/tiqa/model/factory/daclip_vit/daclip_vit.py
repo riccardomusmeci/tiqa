@@ -645,6 +645,7 @@ class DACLIPDegradationViT(nn.Module):
             torch.Tensor: output features
         """
         embed = self.backbone(x, output_hiddens=False)
+        embed = F.normalize(embed, dim=-1)
         out = self.head(embed)
         return out
 

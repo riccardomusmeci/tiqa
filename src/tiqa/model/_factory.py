@@ -5,9 +5,9 @@ from typing import Dict, Optional, Union
 import torch
 import torch.nn as nn
 
-from .factory import daclip_deg_vit_base_patch32_224, dbcnn_vgg16
+from .factory import dbcnn_vgg16, reiqa_resnet50
 
-_FACTORY = {"dbcnn_vgg16": dbcnn_vgg16, "daclip_deg_vit_base_patch32_224": daclip_deg_vit_base_patch32_224}
+_FACTORY = {"dbcnn_vgg16": dbcnn_vgg16, "reiqa_resnet50": reiqa_resnet50}
 
 
 def create_model(  # type: ignore
