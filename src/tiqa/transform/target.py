@@ -6,7 +6,7 @@ class DivTargetBy:
     """
 
     def __init__(self, factor: float) -> None:
-        self.factor = factor
+        self.factor = factor if factor is not None else 1
 
     def __call__(self, x: float) -> float:
         """Divide target by a factor.
