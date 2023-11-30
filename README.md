@@ -14,12 +14,29 @@ pip install .
 ```
 
 ## **Models 🤖**
+tiqa actually supports two models:
+- [Deep Blind Image Quality Assessment Using a Deep Neural Network](https://arxiv.org/abs/1809.00219)
+- [Re-IQA: Unsupervised Learning for Image Quality Assessment in the Wild](https://arxiv.org/abs/2304.00451)
+
+To use a model, just call `create_model` function with the model name and the pretrained weights path (if you want to use a pretrained version).
+
+```python
+from tiqa.model import create_model
+
+model = create_model(
+    model_name="dbcnn_vgg16",
+    ckpt_path="PATH/TO/CKPT",
+)
+```
+
+### **Pretrained Weight 🏋️**
 
 
-| Model | Dataset | Weights |
-|-------|--------------|------|
-| dbcnn_vgg16 | Koniq10k | [gdrive](https://drive.google.com/file/d/13GWi9ka1z7ywo04_TGGLYzY6Id_NaBFO/view?usp=share_link) |
-| dbcnn_vgg16 | - | [gdrive](https://drive.google.com/file/d/1rqeopYS38XqiWcZ8xoa1PxwqEhM4SMgU/view?usp=share_link) |
+| Model | Dataset | SRCC | PLCC | Weights | Notes |
+|-------|--------------|------|------|------| ------|
+| dbcnn_vgg16 | Koniq10k | - | - | [gdrive](https://drive.google.com/file/d/13GWi9ka1z7ywo04_TGGLYzY6Id_NaBFO/view?usp=share_link) |
+| dbcnn_vgg16 | - | - | - | [gdrive](https://drive.google.com/file/d/1rqeopYS38XqiWcZ8xoa1PxwqEhM4SMgU/view?usp=share_link) |
+| reiqa_resnet50 | Koniq10k | - | - | [gdrive](https://drive.google.com/file/d/1PH39CLb7s2RDAripFoTfjanTljmvQDJe/view?usp=share_link) | Trained on Koniq10k from [initial quality aware weights](https://drive.google.com/file/d/1DYMx8omn69yXUmBFL728JD3qMLNogFt8/view?usp=sharing) of [repository](https://github.com/avinabsaha/ReIQA/tree/main)|
 
 
 ## **Concepts 💡**
