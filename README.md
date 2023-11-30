@@ -18,7 +18,7 @@ tiqa actually supports two models:
 - [Deep Blind Image Quality Assessment Using a Deep Neural Network](https://arxiv.org/abs/1809.00219)
 - [Re-IQA: Unsupervised Learning for Image Quality Assessment in the Wild](https://arxiv.org/abs/2304.00451)
 
-To use a model, just call `create_model` function with the model name and the pretrained weights path (if you want to use a pretrained version).
+To use a model, just call `create_model` function with the model name and the pretrained weights path (if you want to use a pretrained version). Weights can be downloaded from the table below.
 
 ```python
 from tiqa.model import create_model
