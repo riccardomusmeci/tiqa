@@ -73,6 +73,7 @@ class ReIQA(nn.Module):
         x = self.fc1(x)
         x = self.relu(x)
         x = self.fc2(x)
+        x = self.dropout(x)
         x = self.head(x)
         return x
 
@@ -91,7 +92,7 @@ def reiqa_resnet50(
         out_dim=128,
         freeze_encoder=freeze_encoder,
         freeze_fc=freeze_fc,
-        dropout=0,
+        dropout=dropout,
         bias=True,
     )
     return model
