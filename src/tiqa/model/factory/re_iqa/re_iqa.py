@@ -80,8 +80,8 @@ class ReIQA(nn.Module):
 
 def reiqa_resnet50(
     pretrained: bool = True,
-    freeze_encoder: bool = True,
-    freeze_fc: bool = True,
+    freeze_encoder: bool = False,
+    freeze_fc: bool = False,
     dropout: float = 0.2,
     bias: bool = True,
 ) -> ReIQA:

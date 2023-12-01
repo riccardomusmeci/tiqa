@@ -14,9 +14,13 @@ pip install .
 ```
 
 ## **Models 🤖**
-tiqa actually supports two models:
-- [Deep Blind Image Quality Assessment Using a Deep Neural Network](https://arxiv.org/abs/1809.00219)
-- [Re-IQA: Unsupervised Learning for Image Quality Assessment in the Wild](https://arxiv.org/abs/2304.00451)
+Models supported by tiqa are:
+
+| Model | tiqa model_name | paper |
+|-------|-----------------|-------|
+| DBCNN | dbcnn_vgg16 | [link](https://arxiv.org/abs/1809.00219) |
+| Re-IQA | reiqa_resnet50 | [link](https://arxiv.org/abs/2304.00451) |
+
 
 To use a model, just call `create_model` function with the model name and the pretrained weights path (if you want to use a pretrained version). Weights can be downloaded from the table below.
 
@@ -24,7 +28,7 @@ To use a model, just call `create_model` function with the model name and the pr
 from tiqa.model import create_model
 
 model = create_model(
-    model_name="dbcnn_vgg16",
+    model_name="dbcnn_vgg16", # "reiqa_resnet50"
     ckpt_path="PATH/TO/CKPT",
     to_replace="model." # most of the time you want to remove the prefix from the state_dict (model. in most cases)
 )
@@ -32,12 +36,12 @@ model = create_model(
 
 ### **Pretrained Weight 🏋️**
 
-
 | Model | Dataset | SRCC | PLCC | Weights | Notes |
 |-------|--------------|------|------|------| ------|
-| dbcnn_vgg16 | Koniq10k | - | - | [gdrive](https://drive.google.com/file/d/13GWi9ka1z7ywo04_TGGLYzY6Id_NaBFO/view?usp=share_link) |
-| dbcnn_vgg16 | - | - | - | [gdrive](https://drive.google.com/file/d/1rqeopYS38XqiWcZ8xoa1PxwqEhM4SMgU/view?usp=share_link) |
-| reiqa_resnet50 | Koniq10k | - | - | [gdrive](www.google.it) | Trained on Koniq10k from [initial quality aware weights](https://drive.google.com/file/d/1DYMx8omn69yXUmBFL728JD3qMLNogFt8/view?usp=sharing) of [repository](https://github.com/avinabsaha/ReIQA/tree/main)|
+| dbcnn_vgg16 | - | - | - | [gdrive](https://drive.google.com/file/d/1rqeopYS38XqiWcZ8xoa1PxwqEhM4SMgU/view?usp=share_link) |Version with only SCNN pretrained weights |
+| dbcnn_vgg16 | Koniq10k | 0.7723 | 0.8363 | [gdrive](https://drive.google.com/file/d/13GWi9ka1z7ywo04_TGGLYzY6Id_NaBFO/view?usp=share_link) | Trained with tiqa on Koniq10k|
+| reiqa_resnet50 | Koniq10k | 0.8522 | 0.8751 | [gdrive](https://drive.google.com/file/d/1K9IpPZMI_IoSzurASGfhTuTEvN25KO8n/view?usp=share_link) | Trained with tiqa on Koniq10k from [pretrained quality aware weights](https://drive.google.com/file/d/1DYMx8omn69yXUmBFL728JD3qMLNogFt8/view?usp=sharing) of [repository](https://github.com/avinabsaha/ReIQA/tree/main)|
+| reiqa_resnet50 | Koniq10k | 0.8780 | 0.9012 | [gdrive](https://drive.google.com/file/d/13Z2jbT0555_bVcQFRMgY_3z-8y6SA85l/view?usp=share_link) | Trained with tiqa on Koniq10k from [pretrained content aware weights](https://drive.google.com/file/d/1TO-5fmZFT2_nt99j4IZen6vmXUb_UL3n/view?usp=sharing) of [repository](https://github.com/avinabsaha/ReIQA/tree/main)|
 
 
 ## **Concepts 💡**
@@ -171,24 +175,26 @@ for epoch in range(NUM_EPOCHS):
         loss.backward()
         optimizer.step()
 ```
-<!--
-## **Inference 🧐**
-Also in inference mode, you can pick between "fully automated", "semi-automated", "write my own code" mode.
 
+## **Inference or Eval 🧐**
+Also in inference or eval mode, you can pick between "fully automated", "semi-automated", "write my own code" mode.
 
 ### **Fully Automated 🚀**
 Once the train is over, you'll find a *config.yaml* file merging all the setups from different sections.
 
 ```python
-from tiqa.core import predict
+from tiqa.core import predict, eval
 
 predict(
     ckpt_path="PATH/TO/OUTPUT/DIR/checkpoints/model.ckpt",
     config_path="PATH/TO/OUTPUT/DIR/config.yaml",
-    images_dir="PATH/TO/IMAGES",
-    output_dir="PATH/TO/OUTPUT/DIR/predictions", # you can choose your own path
-    apply_gradcam=True, # save gradcam images
-    gradcam_with_preds=True, # if True, split gradcam images based on model predicitons
-    layer="...", # layer to use for gradcam
+    data_dir="PATH/TO/IMAGES",
+    output_dir="PATH/TO/OUTPUT/DIR/predictions", # it will save only predictions csv file
 )
-``` -->
+
+eval(
+    ckpt_path="PATH/TO/OUTPUT/DIR/checkpoints/model.ckpt",
+    config_path="PATH/TO/OUTPUT/DIR/config.yaml",
+    data_dir="PATH/TO/IMAGES",
+    output_dir="PATH/TO/OUTPUT/DIR/predictions", # it will save a report.txt file along with predictions
+)
