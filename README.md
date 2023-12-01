@@ -6,6 +6,12 @@
 
 **tiqa** is a PyTorch image quality assessment library with support to PyTorch-Lightning and easy access to experiment with your own dataset.
 
+
+<p align="center">
+  <img  width="45%" height="45%" src="static/low_quality_example.png">
+  <img width="45%" height="45%" src="static/high_quality_example.png"> 
+</p>
+
 ## **How to install 🔨**
 ```
 git clone https://github.com/riccardomusmeci/tiqa
@@ -43,11 +49,6 @@ model = create_model(
 | reiqa_resnet50 | Koniq10k | 0.8522 | 0.8751 | [gdrive](https://drive.google.com/file/d/1K9IpPZMI_IoSzurASGfhTuTEvN25KO8n/view?usp=share_link) | Trained with tiqa on Koniq10k from [pretrained quality aware weights](https://drive.google.com/file/d/1DYMx8omn69yXUmBFL728JD3qMLNogFt8/view?usp=sharing) of [repository](https://github.com/avinabsaha/ReIQA/tree/main)|
 | reiqa_resnet50 | Koniq10k | 0.8780 | 0.9012 | [gdrive](https://drive.google.com/file/d/13Z2jbT0555_bVcQFRMgY_3z-8y6SA85l/view?usp=share_link) | Trained with tiqa on Koniq10k from [pretrained content aware weights](https://drive.google.com/file/d/1TO-5fmZFT2_nt99j4IZen6vmXUb_UL3n/view?usp=sharing) of [repository](https://github.com/avinabsaha/ReIQA/tree/main)|
 
-
-<p align="center">
-  <img  width="250" height="250" src="static/low_quality_example.png">
-  <img width="250" height="250" src="static/high_quality_example.png"> 
-</p>
 
 ## **Concepts 💡**
 tiqa tries to avoid writing again, again, and again (and again) the same code to train, test and make predictions with a image classification model.
