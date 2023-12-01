@@ -29,6 +29,7 @@ class ReIQA(nn.Module):
         super().__init__()
         self.encoder = encoder
         self.fc1 = nn.Linear(encoder_dim, encoder_dim, bias=True)
+        self.relu = nn.ReLU(inplace=True)
         self.fc2 = nn.Linear(encoder_dim, out_dim, bias=True)
 
         if freeze_encoder:
@@ -70,6 +71,7 @@ class ReIQA(nn.Module):
         """
         x = self.encoder.forward(x)
         x = self.fc1(x)
+        x = self.relu(x)
         x = self.fc2(x)
         x = self.head(x)
         return x
