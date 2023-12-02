@@ -9,7 +9,7 @@
 
 <p align="center">
   <img  width="45%" height="45%" src="static/low_quality_example.png">
-  <img width="45%" height="45%" src="static/high_quality_example.png"> 
+  <img width="45%" height="45%" src="static/high_quality_example.png">
 </p>
 
 ## **How to install 🔨**
@@ -204,3 +204,8 @@ eval(
     data_dir="PATH/TO/IMAGES",
     output_dir="PATH/TO/OUTPUT/DIR/predictions", # it will save a report.txt file along with predictions
 )
+```
+
+## 📧 Contact
+
+If you have any questions, please email `riccardomusmeci92@gmail.com`
