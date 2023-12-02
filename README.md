@@ -1,4 +1,4 @@
-<img align="left" width="100" height="100" src="static/tiqa.png"> <font size=5> **PyTorch Image Quality Assessment** </font>
+<img align="left" width="100" height="100" src="static/tiqa.png"> <font size=6> **PyTorch Image Quality Assessment** </font>
 
 **tiqa** is a PyTorch image quality assessment library with support to PyTorch-Lightning and easy access to experiment with your own dataset.
  
